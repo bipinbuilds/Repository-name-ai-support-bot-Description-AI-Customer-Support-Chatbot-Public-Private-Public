@@ -1,0 +1,40 @@
+COMPANY NAME: TechDesk SaaS
+PRODUCT: Project management software
+WEBSITE: www.techdesk.io
+
+PRICING:
+- Starter Plan: $29/month (up to 5 users)
+- Growth Plan: $79/month (up to 20 users)
+- Enterprise Plan: $199/month (unlimited users)
+
+WORKING HOURS: Monday to Friday, 9AM to 6PM IST
+
+FEATURES:
+- Task management and assignment
+- Team collaboration tools
+- Time tracking
+- Reporting and analytics
+- Integration with Slack, Gmail, Notion
+
+REFUND POLICY:
+- 14 day free trial available
+- Full refund within 30 days of purchase
+- No questions asked refund policy
+
+CONTACT:
+- Email: support@techdesk.io
+- Phone: +1-800-TECHDESK
+- Live chat available on website
+
+COMMON QUESTIONS:
+Q: Can I cancel anytime?
+A: Yes, you can cancel your subscription anytime with no penalty.
+
+Q: Is there a free trial?
+A: Yes! We offer a 14-day free trial with no credit card required.
+
+Q: Do you offer discounts for students?
+A: Yes, we offer 50% discount for students and NGOs with valid ID.
+
+Q: Can I upgrade or downgrade my plan?
+A: Yes, you can change your plan anytime from your account settings.
