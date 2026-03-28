@@ -1,10 +1,4 @@
-In Notepad:
-
-Press Ctrl + A to select everything
-Press Delete to clear it all
-Paste this entire code:
-
-html<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,7 +6,6 @@ html<!DOCTYPE html>
     <title>Ambika - Admission Counselor</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
             font-family: Arial, sans-serif;
             background: #f0f2f5;
@@ -21,7 +14,6 @@ html<!DOCTYPE html>
             align-items: center;
             height: 100vh;
         }
-
         .chat-container {
             width: 400px;
             height: 600px;
@@ -32,24 +24,14 @@ html<!DOCTYPE html>
             flex-direction: column;
             overflow: hidden;
         }
-
         .chat-header {
             background: linear-gradient(135deg, #ff6b35, #f7931e);
             color: white;
             padding: 20px;
             text-align: center;
         }
-
-        .chat-header h2 {
-            font-size: 18px;
-            margin-bottom: 4px;
-        }
-
-        .chat-header p {
-            font-size: 12px;
-            opacity: 0.9;
-        }
-
+        .chat-header h2 { font-size: 18px; margin-bottom: 4px; }
+        .chat-header p { font-size: 12px; opacity: 0.9; }
         .chat-messages {
             flex: 1;
             overflow-y: auto;
@@ -58,7 +40,6 @@ html<!DOCTYPE html>
             flex-direction: column;
             gap: 12px;
         }
-
         .message {
             max-width: 80%;
             padding: 12px 16px;
@@ -66,36 +47,32 @@ html<!DOCTYPE html>
             font-size: 14px;
             line-height: 1.6;
         }
-
         .bot-message {
             background: #f0f2f5;
             color: #333;
             align-self: flex-start;
             border-bottom-left-radius: 4px;
         }
-
         .user-message {
             background: linear-gradient(135deg, #ff6b35, #f7931e);
             color: white;
             align-self: flex-end;
             border-bottom-right-radius: 4px;
         }
-
         .typing {
             background: #f0f2f5;
             color: #999;
             align-self: flex-start;
-            border-bottom-left-radius: 4px;
             font-style: italic;
+            padding: 12px 16px;
+            border-radius: 18px;
         }
-
         .chat-input {
             padding: 16px;
             border-top: 1px solid #eee;
             display: flex;
             gap: 10px;
         }
-
         .chat-input input {
             flex: 1;
             padding: 12px 16px;
@@ -103,13 +80,8 @@ html<!DOCTYPE html>
             border-radius: 25px;
             outline: none;
             font-size: 14px;
-            transition: border-color 0.3s;
         }
-
-        .chat-input input:focus {
-            border-color: #ff6b35;
-        }
-
+        .chat-input input:focus { border-color: #ff6b35; }
         .chat-input button {
             background: linear-gradient(135deg, #ff6b35, #f7931e);
             color: white;
@@ -119,11 +91,6 @@ html<!DOCTYPE html>
             cursor: pointer;
             font-size: 14px;
             font-weight: bold;
-            transition: opacity 0.3s;
-        }
-
-        .chat-input button:hover {
-            opacity: 0.9;
         }
     </style>
 </head>
@@ -133,112 +100,101 @@ html<!DOCTYPE html>
             <h2>🎓 Ambika</h2>
             <p>Your Personal Admission Counselor</p>
         </div>
-
-        <div class="chat-messages" id="messages">
-        </div>
-
+        <div class="chat-messages" id="messages"></div>
         <div class="chat-input">
-            <input 
-                type="text" 
-                id="userInput" 
-                placeholder="Type your name or question..."
-            />
+            <input type="text" id="userInput" placeholder="Type your name or question..."/>
             <button id="sendBtn">Send ➤</button>
         </div>
     </div>
 
-    <script>
-        let conversationHistory = [];
-        let userName = localStorage.getItem("ambika_user_name") || "";
+<script>
+let conversationHistory = [];
+let userName = localStorage.getItem("ambika_user_name") || "";
 
-        function getGreeting() {
-            const hour = new Date().getHours();
-            if (hour < 12) return "Good Morning";
-            if (hour < 17) return "Good Afternoon";
-            return "Good Evening";
-        }
+function getGreeting() {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good Morning";
+    if (hour < 17) return "Good Afternoon";
+    return "Good Evening";
+}
 
-        function addMessage(text, isUser) {
-            const messages = document.getElementById("messages");
-            const div = document.createElement("div");
-            div.className = isUser ? "message user-message" : "message bot-message";
-            div.innerText = text;
-            messages.appendChild(div);
-            messages.scrollTop = messages.scrollHeight;
-        }
+function addMessage(text, isUser) {
+    const messages = document.getElementById("messages");
+    const div = document.createElement("div");
+    div.className = isUser ? "message user-message" : "message bot-message";
+    div.innerText = text;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+}
 
-        function showTyping() {
-            const messages = document.getElementById("messages");
-            const div = document.createElement("div");
-            div.className = "message typing";
-            div.id = "typing";
-            div.innerText = "Ambika is typing...";
-            messages.appendChild(div);
-            messages.scrollTop = messages.scrollHeight;
-        }
+function showTyping() {
+    const messages = document.getElementById("messages");
+    const div = document.createElement("div");
+    div.className = "typing";
+    div.id = "typing";
+    div.innerText = "Ambika is typing...";
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+}
 
-        function removeTyping() {
-            const typing = document.getElementById("typing");
-            if (typing) typing.remove();
-        }
+function removeTyping() {
+    const t = document.getElementById("typing");
+    if (t) t.remove();
+}
 
-        window.onload = function() {
-            if (userName) {
-                addMessage(getGreeting() + " " + userName + "! 👋 Welcome back to Ambika College. What would you like to know today?", false);
-            } else {
-                addMessage("🙏 Namaste! I'm Ambika, your personal admission counselor. May I know your name so I can assist you better? 😊", false);
-            }
-        }
+window.onload = function() {
+    if (userName) {
+        addMessage(getGreeting() + " " + userName + "! 👋 Welcome back to Ambika College. What would you like to know today?", false);
+    } else {
+        addMessage("🙏 Namaste! I'm Ambika, your personal admission counselor. May I know your name so I can assist you better? 😊", false);
+    }
+}
 
-        async function sendMessage() {
-            const input = document.getElementById("userInput");
-            const userText = input.value.trim();
-            if (!userText) return;
+async function sendMessage() {
+    const input = document.getElementById("userInput");
+    const userText = input.value.trim();
+    if (!userText) return;
 
-            addMessage(userText, true);
-            input.value = "";
+    addMessage(userText, true);
+    input.value = "";
 
-            if (!userName) {
-                userName = userText;
-                localStorage.setItem("ambika_user_name", userName);
-                addMessage("Nice to meet you " + userName + "! 🙏 Ask me anything about Ambika College — courses, admission, hostel, fees!", false);
-                return;
-            }
+    if (!userName) {
+        userName = userText;
+        localStorage.setItem("ambika_user_name", userName);
+        addMessage("Nice to meet you " + userName + "! 🙏 Ask me anything about Ambika College — courses, admission, hostel or fees!", false);
+        return;
+    }
 
-            showTyping();
+    showTyping();
 
-            try {
-                conversationHistory.push({
-                    role: "user",
-                    content: userText
-                });
+    try {
+        conversationHistory.push({ role: "user", content: userText });
 
-                const response = await fetch("/chat", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ 
-                        message: userText,
-                        history: conversationHistory,
-                        userName: userName
-                    })
-                });
-
-                const data = await response.json();
-                conversationHistory = data.history || [];
-                removeTyping();
-                addMessage(data.reply, false);
-
-            } catch (error) {
-                removeTyping();
-                addMessage("I apologize, please ask your question again!", false);
-            }
-        }
-
-        document.getElementById("sendBtn").addEventListener("click", sendMessage);
-
-        document.getElementById("userInput").addEventListener("keypress", function(e) {
-            if (e.key === "Enter") sendMessage();
+        const response = await fetch("/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                message: userText,
+                history: conversationHistory,
+                userName: userName
+            })
         });
-    </script>
+
+        const data = await response.json();
+        conversationHistory = data.history || [];
+        removeTyping();
+        addMessage(data.reply, false);
+
+    } catch (error) {
+        removeTyping();
+        addMessage("I apologize, please ask your question again!", false);
+    }
+}
+
+document.getElementById("sendBtn").addEventListener("click", sendMessage);
+document.getElementById("userInput").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") sendMessage();
+});
+</script>
 </body>
 </html>
