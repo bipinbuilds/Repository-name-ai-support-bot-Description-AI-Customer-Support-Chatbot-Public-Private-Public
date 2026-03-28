@@ -1,15 +1,9 @@
-In Notepad:
-
-Press Ctrl + A to select everything
-Press Delete to clear it all
-Paste this entire code:
-
-html<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ambika Assistant</title>
+    <title>Ambika - Admission Counselor</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -64,7 +58,7 @@ html<!DOCTYPE html>
             padding: 12px 16px;
             border-radius: 18px;
             font-size: 14px;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .bot-message {
@@ -130,13 +124,13 @@ html<!DOCTYPE html>
 <body>
     <div class="chat-container">
         <div class="chat-header">
-            <h2>🎓 Ambika Assistant</h2>
-            <p>Ambika Padavi Poorva Vidyalaya</p>
+            <h2>🎓 Ambika</h2>
+            <p>Your Personal Admission Counselor</p>
         </div>
 
         <div class="chat-messages" id="messages">
             <div class="message bot-message">
-                🙏 Namaste! I'm Ambika Assistant. How can I help you with admissions or college information today?
+                🙏 Namaste! I'm Ambika, your personal admission counselor. May I know your name so I can assist you better? 😊
             </div>
         </div>
 
@@ -144,7 +138,7 @@ html<!DOCTYPE html>
             <input 
                 type="text" 
                 id="userInput" 
-                placeholder="Ask about courses, admission..."
+                placeholder="Type your name or question..."
                 onkeypress="handleKeyPress(event)"
             />
             <button onclick="sendMessage()">Send</button>
@@ -153,6 +147,32 @@ html<!DOCTYPE html>
 
     <script>
         let conversationHistory = [];
+        let userName = localStorage.getItem("ambika_user_name") || "";
+
+        function getGreeting() {
+            const hour = new Date().getHours();
+            if (hour < 12) return "Good Morning";
+            if (hour < 17) return "Good Afternoon";
+            return "Good Evening";
+        }
+
+        window.onload = function() {
+            const messages = document.getElementById("messages");
+            messages.innerHTML = "";
+            if (userName) {
+                messages.innerHTML += `
+                    <div class="message bot-message">
+                        ${getGreeting()} ${userName}! 👋 Welcome back to Ambika College. What would you like to know today?
+                    </div>
+                `;
+            } else {
+                messages.innerHTML += `
+                    <div class="message bot-message">
+                        🙏 Namaste! I'm Ambika, your personal admission counselor. May I know your name so I can assist you better? 😊
+                    </div>
+                `;
+            }
+        }
 
         async function sendMessage() {
             const input = document.getElementById("userInput");
@@ -166,49 +186,18 @@ html<!DOCTYPE html>
             `;
             input.value = "";
 
-            messages.innerHTML += `
-                <div class="message typing" id="typing">
-                    Ambika Assistant is typing...
-                </div>
-            `;
-            messages.scrollTop = messages.scrollHeight;
-
-            try {
-                const response = await fetch("/chat", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ 
-                        message: userText,
-                        history: conversationHistory 
-                    })
-                });
-
-                const data = await response.json();
-                conversationHistory = data.history || [];
-
-                document.getElementById("typing").remove();
-
-                messages.innerHTML += `
-                    <div class="message bot-message">${data.reply}</div>
-                `;
-                messages.scrollTop = messages.scrollHeight;
-
-            } catch (error) {
-                document.getElementById("typing").remove();
+            if (!userName) {
+                userName = userText;
+                localStorage.setItem("ambika_user_name", userName);
                 messages.innerHTML += `
                     <div class="message bot-message">
-                        I apologize, please ask your question again!
+                        Nice to meet you ${userName}! 🙏 How can I help you today? You can ask me about courses, admission, hostel, fees or anything about Ambika College!
                     </div>
                 `;
                 messages.scrollTop = messages.scrollHeight;
+                return;
             }
-        }
 
-        function handleKeyPress(event) {
-            if (event.key === "Enter") {
-                sendMessage();
-            }
-        }
-    </script>
-</body>
-</html>
+            messages.innerHTML += `
+                <div class="message typing" id="typing">
+                    Ambika is typing
