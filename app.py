@@ -8,23 +8,23 @@ CORS(app)
 
 client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
-with open("business_data.txt", "r") as f:
+with open("business_data.txt", "r", encoding="utf-8") as f:
     business_knowledge = f.read()
 
 SYSTEM_PROMPT = f"""
-You are a helpful admission assistant for Ambika Padavi Poorva Vidyalaya, a prestigious PUC college in Puttur, Dakshina Kannada. Your name is Ambika Assistant. Never mention TechDesk. Always introduce yourself as Ambika Assistant. Be helpful, warm and professional when answering student and parent queries.
-BUSINESS INFORMATION:
+You are a helpful admission assistant for Ambika Padavi Poorva Vidyalaya college in Puttur, Dakshina Kannada.
+Use the following information to answer questions accurately.
+
+COLLEGE INFORMATION:
 {business_knowledge}
 
 RULES:
-- Only answer based on the business information provided
-- Be polite, concise and friendly
-- If a question is not covered in the business info, 
-  say 'Let me connect you to a human agent for that.'
-- Always stay in character as TechDesk support agent
+- Always greet as Ambika Assistant
+- Be polite, friendly and helpful
+- Answer in simple English
+- If question is not covered, say 'Please contact us at +91 94488 35488'
+- Never make up information not provided
 """
-
-conversation_history = []
 
 @app.route("/")
 def home():
@@ -32,28 +32,44 @@ def home():
 
 @app.route("/chat", methods=["POST"])
 def chat():
-    user_message = request.json.get("message")
+    try:
+        data = request.json
+        if not data or "message" not in data:
+            return jsonify({"reply": "Please send a message!"}), 400
 
-    conversation_history.append({
-        "role": "user",
-        "content": user_message
-    })
+        user_message = data["message"]
+        conversation = data.get("history", [])
 
-    response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT}
-        ] + conversation_history
-    )
+        conversation.append({
+            "role": "user",
+            "content": user_message
+        })
 
-    bot_reply = response.choices[0].message.content
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT}
+            ] + conversation,
+            max_tokens=500,
+            temperature=0.7
+        )
 
-    conversation_history.append({
-        "role": "assistant",
-        "content": bot_reply
-    })
+        bot_reply = response.choices[0].message.content
 
-    return jsonify({"reply": bot_reply})
+        conversation.append({
+            "role": "assistant",
+            "content": bot_reply
+        })
+
+        return jsonify({
+            "reply": bot_reply,
+            "history": conversation
+        })
+
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        return jsonify({"reply": "I apologize, please ask your question again!"}), 200
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)

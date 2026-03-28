@@ -1,9 +1,15 @@
-<!DOCTYPE html>
+In Notepad:
+
+Press Ctrl + A to select everything
+Press Delete to clear it all
+Paste this entire code:
+
+html<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Support Bot</title>
+    <title>Ambika Assistant</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -28,7 +34,7 @@
         }
 
         .chat-header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
             color: white;
             padding: 20px;
             text-align: center;
@@ -41,7 +47,7 @@
 
         .chat-header p {
             font-size: 12px;
-            opacity: 0.8;
+            opacity: 0.9;
         }
 
         .chat-messages {
@@ -69,7 +75,7 @@
         }
 
         .user-message {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
             color: white;
             align-self: flex-end;
             border-bottom-right-radius: 4px;
@@ -101,11 +107,11 @@
         }
 
         .chat-input input:focus {
-            border-color: #667eea;
+            border-color: #ff6b35;
         }
 
         .chat-input button {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
             color: white;
             border: none;
             padding: 12px 20px;
@@ -124,13 +130,13 @@
 <body>
     <div class="chat-container">
         <div class="chat-header">
-            <h2>🤖 AI Support Bot</h2>
-            <p>Always here to help you 24/7</p>
+            <h2>🎓 Ambika Assistant</h2>
+            <p>Ambika Padavi Poorva Vidyalaya</p>
         </div>
 
         <div class="chat-messages" id="messages">
             <div class="message bot-message">
-                👋 Hi there! I'm your AI support assistant. How can I help you today?
+                🙏 Namaste! I'm Ambika Assistant. How can I help you with admissions or college information today?
             </div>
         </div>
 
@@ -138,7 +144,7 @@
             <input 
                 type="text" 
                 id="userInput" 
-                placeholder="Type your message..."
+                placeholder="Ask about courses, admission..."
                 onkeypress="handleKeyPress(event)"
             />
             <button onclick="sendMessage()">Send</button>
@@ -146,6 +152,8 @@
     </div>
 
     <script>
+        let conversationHistory = [];
+
         async function sendMessage() {
             const input = document.getElementById("userInput");
             const messages = document.getElementById("messages");
@@ -153,33 +161,33 @@
 
             if (!userText) return;
 
-            // Show user message
             messages.innerHTML += `
                 <div class="message user-message">${userText}</div>
             `;
             input.value = "";
 
-            // Show typing indicator
             messages.innerHTML += `
                 <div class="message typing" id="typing">
-                    Bot is typing...
+                    Ambika Assistant is typing...
                 </div>
             `;
             messages.scrollTop = messages.scrollHeight;
 
             try {
-                    const response = await fetch("/chat", {                  
+                const response = await fetch("/chat", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ message: userText })
+                    body: JSON.stringify({ 
+                        message: userText,
+                        history: conversationHistory 
+                    })
                 });
 
                 const data = await response.json();
+                conversationHistory = data.history || [];
 
-                // Remove typing indicator
                 document.getElementById("typing").remove();
 
-                // Show bot reply
                 messages.innerHTML += `
                     <div class="message bot-message">${data.reply}</div>
                 `;
@@ -189,9 +197,10 @@
                 document.getElementById("typing").remove();
                 messages.innerHTML += `
                     <div class="message bot-message">
-                        Sorry, something went wrong. Please try again.
+                        I apologize, please ask your question again!
                     </div>
                 `;
+                messages.scrollTop = messages.scrollHeight;
             }
         }
 
