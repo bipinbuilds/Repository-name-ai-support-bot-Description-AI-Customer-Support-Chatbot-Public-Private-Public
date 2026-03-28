@@ -1,4 +1,10 @@
-<!DOCTYPE html>
+In Notepad:
+
+Press Ctrl + A to select everything
+Press Delete to clear it all
+Paste this entire code:
+
+html<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -129,9 +135,6 @@
         </div>
 
         <div class="chat-messages" id="messages">
-            <div class="message bot-message">
-                🙏 Namaste! I'm Ambika, your personal admission counselor. May I know your name so I can assist you better? 😊
-            </div>
         </div>
 
         <div class="chat-input">
@@ -139,9 +142,8 @@
                 type="text" 
                 id="userInput" 
                 placeholder="Type your name or question..."
-                onkeypress="handleKeyPress(event)"
             />
-            <button onclick="sendMessage()">Send</button>
+            <button id="sendBtn">Send ➤</button>
         </div>
     </div>
 
@@ -156,48 +158,87 @@
             return "Good Evening";
         }
 
-        window.onload = function() {
+        function addMessage(text, isUser) {
             const messages = document.getElementById("messages");
-            messages.innerHTML = "";
+            const div = document.createElement("div");
+            div.className = isUser ? "message user-message" : "message bot-message";
+            div.innerText = text;
+            messages.appendChild(div);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function showTyping() {
+            const messages = document.getElementById("messages");
+            const div = document.createElement("div");
+            div.className = "message typing";
+            div.id = "typing";
+            div.innerText = "Ambika is typing...";
+            messages.appendChild(div);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function removeTyping() {
+            const typing = document.getElementById("typing");
+            if (typing) typing.remove();
+        }
+
+        window.onload = function() {
             if (userName) {
-                messages.innerHTML += `
-                    <div class="message bot-message">
-                        ${getGreeting()} ${userName}! 👋 Welcome back to Ambika College. What would you like to know today?
-                    </div>
-                `;
+                addMessage(getGreeting() + " " + userName + "! 👋 Welcome back to Ambika College. What would you like to know today?", false);
             } else {
-                messages.innerHTML += `
-                    <div class="message bot-message">
-                        🙏 Namaste! I'm Ambika, your personal admission counselor. May I know your name so I can assist you better? 😊
-                    </div>
-                `;
+                addMessage("🙏 Namaste! I'm Ambika, your personal admission counselor. May I know your name so I can assist you better? 😊", false);
             }
         }
 
         async function sendMessage() {
             const input = document.getElementById("userInput");
-            const messages = document.getElementById("messages");
             const userText = input.value.trim();
-
             if (!userText) return;
 
-            messages.innerHTML += `
-                <div class="message user-message">${userText}</div>
-            `;
+            addMessage(userText, true);
             input.value = "";
 
             if (!userName) {
                 userName = userText;
                 localStorage.setItem("ambika_user_name", userName);
-                messages.innerHTML += `
-                    <div class="message bot-message">
-                        Nice to meet you ${userName}! 🙏 How can I help you today? You can ask me about courses, admission, hostel, fees or anything about Ambika College!
-                    </div>
-                `;
-                messages.scrollTop = messages.scrollHeight;
+                addMessage("Nice to meet you " + userName + "! 🙏 Ask me anything about Ambika College — courses, admission, hostel, fees!", false);
                 return;
             }
 
-            messages.innerHTML += `
-                <div class="message typing" id="typing">
-                    Ambika is typing
+            showTyping();
+
+            try {
+                conversationHistory.push({
+                    role: "user",
+                    content: userText
+                });
+
+                const response = await fetch("/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ 
+                        message: userText,
+                        history: conversationHistory,
+                        userName: userName
+                    })
+                });
+
+                const data = await response.json();
+                conversationHistory = data.history || [];
+                removeTyping();
+                addMessage(data.reply, false);
+
+            } catch (error) {
+                removeTyping();
+                addMessage("I apologize, please ask your question again!", false);
+            }
+        }
+
+        document.getElementById("sendBtn").addEventListener("click", sendMessage);
+
+        document.getElementById("userInput").addEventListener("keypress", function(e) {
+            if (e.key === "Enter") sendMessage();
+        });
+    </script>
+</body>
+</html>
