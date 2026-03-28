@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from groq import Groq
 import os
@@ -7,6 +7,7 @@ app = Flask(__name__)
 CORS(app)
 
 client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+
 with open("business_data.txt", "r") as f:
     business_knowledge = f.read()
 
@@ -27,6 +28,10 @@ RULES:
 """
 
 conversation_history = []
+
+@app.route("/")
+def home():
+    return send_from_directory(".", "index.html")
 
 @app.route("/chat", methods=["POST"])
 def chat():
