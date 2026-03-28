@@ -1,40 +1,138 @@
-COMPANY NAME: TechDesk SaaS
-PRODUCT: Project management software
-WEBSITE: www.techdesk.io
+COLLEGE NAME: Ambika Padavi Poorva Vidyalaya
+WEBSITE: https://ambikapucollege.edu.in
+ESTABLISHED: 2009
+LOCATION: Ramakrishna Ashram Road, Nellikatte, Puttur, Dakshina Kannada, Karnataka - 574201
+RESIDENTIAL CAMPUS: Bappalige, Puttur, Dakshina Kannada, Karnataka - 574201
 
-PRICING:
-- Starter Plan: $29/month (up to 5 users)
-- Growth Plan: $79/month (up to 20 users)
-- Enterprise Plan: $199/month (unlimited users)
+ABOUT:
+Ambika Padavi Poorva Vidyalaya was founded in 2009 in Puttur, Dakshina Kannada.
+Established by Nattoja Foundation Trust under leadership of 
+Shri Subramanya Nattoja and Smt. Rajashree Nattoja.
+Rated 5.0/5 by students.
+The college has two campuses:
+1. Nellikatte Campus - Day Scholar Campus
+2. Bappalige Campus - Residential Campus
 
-WORKING HOURS: Monday to Friday, 9AM to 6PM IST
+VISION:
+To be the preeminent teaching college linking people of 
+Karnataka to the nation and the world.
 
-FEATURES:
-- Task management and assignment
-- Team collaboration tools
-- Time tracking
-- Reporting and analytics
-- Integration with Slack, Gmail, Notion
+MISSION:
+To train young minds in the correct path so that younger 
+generation becomes self confident and capable of facing 
+any practical challenge in life.
 
-REFUND POLICY:
-- 14 day free trial available
-- Full refund within 30 days of purchase
-- No questions asked refund policy
+COURSES OFFERED:
 
-CONTACT:
-- Email: support@techdesk.io
-- Phone: +1-800-TECHDESK
-- Live chat available on website
+1st PUC SCIENCE:
+- Subjects: PCMB, PCMCs
+- Languages: Kannada, Hindi, Sanskrit
+- Coaching: K-CET, JEE Mains and Advanced, NEET, NATA, NDA
+
+1st PUC COMMERCE:
+- Subjects: SEBA + Basic Maths
+- Languages: Kannada, Hindi, Sanskrit
+- Coaching: CA, NDA, CLAT
+
+2nd PUC SCIENCE:
+- Subjects: PCMB, PCMCs
+- Languages: Kannada, Hindi, Sanskrit
+- Coaching: K-CET, JEE Mains and Advanced, NEET, NATA, NDA
+
+2nd PUC COMMERCE:
+- Subjects: SEBA + Basic Maths
+- Languages: Kannada, Hindi, Sanskrit
+- Coaching: CA, NDA, CLAT
+
+SPECIAL PROGRAMS:
+- NEET Long Term Batch Available
+- Free Yoga Classes for all students
+- Free Career Guidance and Counseling
+- Lectures by experts on current topics
+- Dharma Shikshana program
+
+FACILITIES:
+- Science and Commerce Lab Facilities
+- Separate Boys Hostel at Bappalige Residential Campus
+- Separate Girls Hostel at Bappalige Residential Campus
+- Hostel is ONLY at Bappalige Campus, NOT at Nellikatte Campus
+- Day Scholar facility available at Nellikatte Campus
+- Free Yoga Classes
+- Career Guidance and Counseling
+
+SCHOLARSHIPS:
+Ambika offers scholarships to meritorious students who 
+perform well in periodic examinations conducted by the 
+institute. This is unique to Ambika and encourages 
+students to perform better.
+
+ADMISSION PROCESS:
+- Students can collect application forms from College 
+  office after announcement of SSLC results
+- Forms available on any working days
+- Can also download form from website and submit with 
+  all documents and Registration fees
+- Fees are moderate and affordable for all students
+
+CONTACT - NELLIKATTE CAMPUS (Day Scholar):
+Phone: 08251-235688 / 298688
+Mobile: +91 94488 35488
+Address: Ramakrishna Ashram Road, Nellikatte, 
+Puttur - Dakshina Kannada - 574201
+
+CONTACT - BAPPALIGE CAMPUS (Residential):
+Phone: 08251-238688
+Mobile: +91 87628 92488
+Address: Bappalige, Puttur, 
+Dakshina Kannada - 574201
 
 COMMON QUESTIONS:
-Q: Can I cancel anytime?
-A: Yes, you can cancel your subscription anytime with no penalty.
 
-Q: Is there a free trial?
-A: Yes! We offer a 14-day free trial with no credit card required.
+Q: What courses are available after 10th standard?
+A: We offer 1st and 2nd PUC in Science and Commerce 
+streams with competitive exam coaching included.
 
-Q: Do you offer discounts for students?
-A: Yes, we offer 50% discount for students and NGOs with valid ID.
+Q: Do you provide IIT JEE coaching?
+A: Yes! We provide K-CET, JEE Mains and Advanced, 
+NEET, NATA and NDA coaching along with regular PUC.
 
-Q: Can I upgrade or downgrade my plan?
-A: Yes, you can change your plan anytime from your account settings.
+Q: Is hostel facility available?
+A: Yes! We have SEPARATE hostels for Boys and Girls 
+at our Bappalige Residential Campus. Hostel is not 
+available at Nellikatte campus which is day scholar only.
+
+Q: Are scholarships available?
+A: Yes! Ambika offers scholarships to meritorious 
+students based on periodic exam performance. 
+This is unique to Ambika college.
+
+Q: What is the admission process?
+A: Collect application form from college office after 
+SSLC results or download from website. Submit with 
+required documents and registration fees.
+
+Q: Are yoga classes available?
+A: Yes! Free yoga classes are provided to all students.
+
+Q: Is NEET coaching available?
+A: Yes! NEET coaching is available including a special 
+NEET Long Term Batch for serious aspirants.
+
+Q: Which campus should I choose?
+A: If you need hostel facility, choose Bappalige 
+Residential Campus. If you are a local day scholar, 
+choose Nellikatte Campus.
+
+Q: What is the fee structure?
+A: Fees are moderate and affordable for all students. 
+For exact fee details please contact us directly at 
++91 94488 35488 (Nellikatte) or +91 87628 92488 (Bappalige).
+
+Q: What subjects are available in Science stream?
+A: Science stream offers PCMB (Physics, Chemistry, 
+Maths, Biology) and PCMCs (Physics, Chemistry, 
+Maths, Computer Science).
+
+Q: What competitive exams do you coach for?
+A: We coach for K-CET, JEE Mains, JEE Advanced, 
+NEET, NATA, NDA, CA, and CLAT.
