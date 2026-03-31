@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from groq import Groq
 import os
+import time
 
 app = Flask(__name__)
 CORS(app)
@@ -35,43 +36,69 @@ def home():
 
 @app.route("/chat", methods=["POST"])
 def chat():
-    try:
-        data = request.json
-        if not data or "message" not in data:
-            return jsonify({"reply": "Please send a message!"}), 400
+    max_retries = 3
+    retry_delay = 2
 
-        user_message = data["message"]
-        conversation = data.get("history", [])
+    for attempt in range(max_retries):
+        try:
+            data = request.json
+            if not data or "message" not in data:
+                return jsonify({"reply": "Please send a message!"}), 400
 
-        conversation.append({
-            "role": "user",
-            "content": user_message
-        })
+            user_message = data["message"]
+            conversation = data.get("history", [])
 
-        response = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT}
-            ] + conversation,
-            max_tokens=500,
-            temperature=0.7
-        )
+            conversation.append({
+                "role": "user",
+                "content": user_message
+            })
 
-        bot_reply = response.choices[0].message.content
+            # Keep only last 10 messages to avoid token limits
+            if len(conversation) > 10:
+                conversation = conversation[-10:]
 
-        conversation.append({
-            "role": "assistant",
-            "content": bot_reply
-        })
+            response = client.chat.completions.create(
+                model="llama-3.3-70b-versatile",
+                messages=[
+                    {"role": "system", "content": SYSTEM_PROMPT}
+                ] + conversation,
+                max_tokens=300,
+                temperature=0.7
+            )
 
-        return jsonify({
-            "reply": bot_reply,
-            "history": conversation
-        })
+            bot_reply = response.choices[0].message.content
 
-    except Exception as e:
-        print(f"Error: {str(e)}")
-        return jsonify({"reply": "I apologize, please ask your question again!"}), 200
+            conversation.append({
+                "role": "assistant",
+                "content": bot_reply
+            })
+
+            return jsonify({
+                "reply": bot_reply,
+                "history": conversation
+            })
+
+        except Exception as e:
+            error_msg = str(e)
+            print(f"Attempt {attempt + 1} failed: {error_msg}")
+
+            if "rate_limit" in error_msg.lower():
+                if attempt < max_retries - 1:
+                    time.sleep(retry_delay)
+                    retry_delay *= 2
+                    continue
+                else:
+                    return jsonify({
+                        "reply": "I'm receiving too many questions right now. Please wait 30 seconds and ask again! 🙏"
+                    }), 200
+
+            return jsonify({
+                "reply": "I'm having a small issue. Please ask your question again! 🙏"
+            }), 200
+
+    return jsonify({
+        "reply": "Please wait a moment and try again! 🙏"
+    }), 200
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
